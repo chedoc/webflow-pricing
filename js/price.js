@@ -84,9 +84,9 @@ window.onload = async () => {
 
             newPrice = new Intl.NumberFormat(
               planData.country === "ARG" ? "es-ES" : "en"
-            ).format(anualidad);
+            ).format(Math.round(newPrice));
 
-            formattedNewPrice = `$${Math.round(newPrice)}`;
+            formattedNewPrice = `$${newPrice}`;
             return;
           }
 
