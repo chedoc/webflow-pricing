@@ -79,11 +79,12 @@ window.onload = async () => {
           ) {
             let newPrice = planData.priceWithTax;
             if (planMode === "Anual") {
-              formattedNewPrice = `$${Math.round(
-                newPrice * 12 * (1 - planData.annualDiscountPerc)
-              )}`;
-              return;
+              newPrice = newPrice * 12 * (1 - planData.annualDiscountPerc);
             }
+
+            newPrice = new Intl.NumberFormat(
+              planData.country === "ARG" ? "es-ES" : "en"
+            ).format(anualidad);
 
             formattedNewPrice = `$${Math.round(newPrice)}`;
             return;
