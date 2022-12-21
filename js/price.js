@@ -1,4 +1,4 @@
-const planPricesUrl = "https://staging-api.chedoc.com/api/planPrices";
+const planPricesUrl = "https://api2.chedoc.com/api/planPrices";
 let planPricesData;
 
 const fetchPlanPrices = async () => {
