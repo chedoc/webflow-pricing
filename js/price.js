@@ -7,8 +7,7 @@ const fetchPlanPrices = async () => {
 };
 
 window.onload = async () => {
-  let _PLAN_TYPE = "Anual";
-  let _AGENDAS_COUNT = 0;
+  let _AGENDAS_COUNT = 1;
   await fetchPlanPrices();
 
   // agendas count (slider) logic
@@ -87,10 +86,8 @@ window.onload = async () => {
             ).format(Math.round(newPrice));
 
             formattedNewPrice = `$${newPrice}`;
-            return;
+            planPrices[i].childNodes[0].nodeValue = formattedNewPrice;
           }
-
-          planPrices[i].childNodes[0].nodeValue = formattedNewPrice;
         });
 
         i++;
