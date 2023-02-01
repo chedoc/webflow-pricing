@@ -58,6 +58,12 @@ window.onload = async () => {
   );
 
   const updatePlanPrices = () => {
+    // remove any previous .iva-tag
+    let ivaTextElems = document.querySelectorAll('.iva-tag');
+    ivaTextElems.forEach(element => {
+      element.remove();
+    });
+
     for (const opt of planBoxes) {
       const planMode = opt.getAttribute("data-w-tab");
       const planTypes = opt.getElementsByClassName("heading-style-h6");
@@ -76,6 +82,7 @@ window.onload = async () => {
             _AGENDAS_COUNT <= planData.maxAgendas &&
             planType.includes(planData.name)
           ) {
+
             let newPrice = planData.country === "ARG" ? planData.price : planData.priceWithTax;
             if (planMode === "Anual") {
               newPrice = newPrice * 12 * (1 - planData.annualDiscountPerc);
@@ -89,16 +96,14 @@ window.onload = async () => {
             planPrices[i].childNodes[0].nodeValue = formattedNewPrice;
 
             if (planData.country === "ARG") {
-              let ivaTextElem = document.getElementById('iva-tag');
-              if (ivaTextElem) {
-                ivaTextElem.remove();
-              }
-
               // add "+iva" legend
               ivaTextElem = document.createElement("span");
-              ivaTextElem.setAttribute("id", "iva-tag");
-              ivaTextElem.classList.add("heading-style-h6");
+              ivaTextElem.classList.add("iva-tag");
               ivaTextElem.style.color = '#777';
+              ivaTextElem.style.fontSize = '1.25rem';
+              ivaTextElem.style.fontWeight = '700';
+              ivaTextElem.style.lineHeight = '1.4';
+              ivaTextElem.style.margin = '0px 0px 0px 10px';
               ivaTextElem.append("+ IVA");
               planPrices[i].appendChild(ivaTextElem);
             }
