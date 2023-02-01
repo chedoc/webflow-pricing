@@ -76,7 +76,7 @@ window.onload = async () => {
             _AGENDAS_COUNT <= planData.maxAgendas &&
             planType.includes(planData.name)
           ) {
-            let newPrice = planData.priceWithTax;
+            let newPrice = planData.country === "ARG" ? planData.price : planData.priceWithTax;
             if (planMode === "Anual") {
               newPrice = newPrice * 12 * (1 - planData.annualDiscountPerc);
             }
@@ -87,6 +87,21 @@ window.onload = async () => {
 
             formattedNewPrice = `$${newPrice}`;
             planPrices[i].childNodes[0].nodeValue = formattedNewPrice;
+
+            if (planData.country === "ARG") {
+              let ivaTextElem = document.getElementById('iva-tag');
+              if (ivaTextElem) {
+                ivaTextElem.remove();
+              }
+
+              // add "+iva" legend
+              ivaTextElem = document.createElement("span");
+              ivaTextElem.setAttribute("id", "iva-tag");
+              ivaTextElem.classList.add("heading-style-h6");
+              ivaTextElem.style.color = '#777';
+              ivaTextElem.append("+ IVA");
+              planPrices[i].appendChild(ivaTextElem);
+            }
           }
         });
 
