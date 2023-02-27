@@ -1,9 +1,24 @@
 const planPricesUrl = "https://api2.chedoc.com/api/planPrices";
 let planPricesData;
 
+var queryString = window.location.search;
+// ?country=default
+var URLSearchParams_wb = new URLSearchParams(queryString);
+var utmElement = "country";
+
+var urlCountry;
+if (URLSearchParams_wb.has(utmElement)) {
+  urlCountry = URLSearchParams_wb.get(utmElement);
+}
+
 const fetchPlanPrices = async () => {
-  let response = await fetch(planPricesUrl);
+  const url = urlCountry
+    ? `${planPricesUrl}?country=${urlCountry}`
+    : planPricesUrl;
+  let response = await fetch(url);
   planPricesData = await response.json();
+
+  // console.log(planPricesData);
 };
 
 window.onload = async () => {
@@ -59,8 +74,8 @@ window.onload = async () => {
 
   const updatePlanPrices = () => {
     // remove any previous .iva-tag
-    let ivaTextElems = document.querySelectorAll('.iva-tag');
-    ivaTextElems.forEach(element => {
+    let ivaTextElems = document.querySelectorAll(".iva-tag");
+    ivaTextElems.forEach((element) => {
       element.remove();
     });
 
@@ -82,8 +97,10 @@ window.onload = async () => {
             _AGENDAS_COUNT <= planData.maxAgendas &&
             planType.includes(planData.name)
           ) {
-
-            let newPrice = planData.country === "ARG" ? planData.price : planData.priceWithTax;
+            let newPrice =
+              planData.country === "ARG"
+                ? planData.price
+                : planData.priceWithTax;
             if (planMode === "Anual") {
               newPrice = newPrice * 12 * (1 - planData.annualDiscountPerc);
             }
@@ -99,11 +116,11 @@ window.onload = async () => {
               // add "+iva" legend
               ivaTextElem = document.createElement("span");
               ivaTextElem.classList.add("iva-tag");
-              ivaTextElem.style.color = '#777';
-              ivaTextElem.style.fontSize = '1.25rem';
-              ivaTextElem.style.fontWeight = '700';
-              ivaTextElem.style.lineHeight = '1.4';
-              ivaTextElem.style.margin = '0px 0px 0px 10px';
+              ivaTextElem.style.color = "#777";
+              ivaTextElem.style.fontSize = "1.25rem";
+              ivaTextElem.style.fontWeight = "700";
+              ivaTextElem.style.lineHeight = "1.4";
+              ivaTextElem.style.margin = "0px 0px 0px 10px";
               ivaTextElem.append("+ IVA");
               planPrices[i].appendChild(ivaTextElem);
             }
