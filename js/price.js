@@ -95,7 +95,7 @@ window.onload = async () => {
           if (
             _AGENDAS_COUNT >= planData.minAgendas &&
             _AGENDAS_COUNT <= planData.maxAgendas &&
-            planType.includes(planData.name)
+            planType.includes(planData?.subscriptionPlan?.name)
           ) {
             let newPrice =
               planData.country === "ARG"
