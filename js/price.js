@@ -102,7 +102,9 @@ window.onload = async () => {
                 ? planData.price
                 : planData.priceWithTax;
             if (planMode === "Anual") {
-              newPrice = newPrice * 12 * (1 - planData.annualDiscountPerc);
+              const annualPrice =
+                newPrice * 12 * (1 - planData.annualDiscountPerc);
+              newPrice = annualPrice / 12;
             }
 
             newPrice = new Intl.NumberFormat(
