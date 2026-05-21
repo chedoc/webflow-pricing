@@ -246,14 +246,20 @@ const initPricingOptimized = async () => {
 
 const initPricing = async () => {
   if (isPlansPage()) {
-    await initPricingWithSlider();
+    // En /planes: esperar window.onload
+    if (document.readyState === "loading") {
+      window.addEventListener("load", initPricingWithSlider);
+    } else {
+      initPricingWithSlider();
+    }
   } else {
-    await initPricingOptimized();
+    // En otros: usar DOMContentLoaded (optimizado)
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", initPricingOptimized);
+    } else {
+      initPricingOptimized();
+    }
   }
 };
 
-if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", initPricing);
-} else {
-  initPricing();
-}
+initPricing();
