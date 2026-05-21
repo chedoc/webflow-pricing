@@ -1,7 +1,6 @@
 const planPricesUrl = "https://api2.chedoc.com/api/planPrices";
 let planPricesData;
 let _PLAN_TYPE = "Mensual";
-let _AGENDAS_COUNT = 1;
 
 let queryString = window.location.search;
 let URLSearchParams_wb = new URLSearchParams(queryString);
@@ -25,6 +24,7 @@ const isPlansPage = () => {
 };
 
 window.onload = async () => {
+  let _AGENDAS_COUNT = 1;
   await fetchPlanPrices();
 
   // Si es /planes, ejecutar con slider
